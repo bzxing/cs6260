@@ -8,7 +8,7 @@ def solve_x(s: int, k: int, h: int, r: int, q: int) -> int:
     print(remainder)
 
     for n in range(1, 15):
-        remainder += k * q % r
+        remainder = (remainder + (k * q)) % r
         print(remainder)
 
     return 0
