@@ -1,6 +1,14 @@
 #!/usr/bin/python3
-
+import itertools
 import json
+
+
+def solve_x(s: int, k: int, h: int, r: int, q: int) -> int:
+    n: int
+    for n in itertools.count():
+        x, remainder = divmod(k * (s + n * q) - h, r)
+        if remainder == 0:
+            return x
 
 
 def solve_k(r: int, g: int, p: int, q: int, k_range: range) -> int:
@@ -25,10 +33,13 @@ def main():
     r: int = input_object["r"]
     s: int = input_object["s"]
 
-    k = solve_k(r, g, p, q, range(1, 65536))
+    k: int = solve_k(r, g, p, q, range(1, 65536))
     print(k)
 
-    return k
+    x: int = solve_x(s, k, h, r, q)
+    print(x)
+
+    return 0
 
 
 if __name__ == "__main__":
