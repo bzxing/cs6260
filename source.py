@@ -8,12 +8,12 @@ def print_kv(k, v):
 
 
 def wrap_around(start: int, step: int, target: int) -> (int, int):
-    print_kv("start", start)
-    print_kv("step", step)
-    num_steps, quotient = divmod(target, step)
+    num_steps, quotient = divmod(target - start, step)
     if quotient * 2 > step:
         num_steps += 1
     new_start: int = (start + num_steps * step) % target
+    if new_start * 2 > target:
+        new_start = new_start - target
     return num_steps, new_start
 
 
@@ -26,15 +26,29 @@ def solve_x(s: int, k: int, h: int, r: int, q: int) -> int:
 
     n: int = 1
     i: int = 0
-    while start != 0 and i < 100:
-        if step == 0:
-            raise RuntimeError("Hit a wall...")
-        num_steps, new_start = wrap_around(start, step, r)
-        new_step = new_start - start
+    while start != 0 and i < 50000:
+        print_kv("i", i)
+        print_kv("start", start)
+        print_kv("step", step)
 
+        if step == 0:
+            print_kv("n", n)
+            raise RuntimeError("Hit a wall...")
+
+        num_steps, new_start = wrap_around(start, step, r)
+        new_step = (new_start - start) % step
+
+        if step <= new_step:
+            raise RuntimeError("It's not converging..")
         step = new_step
         start = new_start
         n *= num_steps
+        print_kv("num_steps", num_steps)
+        print_kv("n", n)
+
+        current_remainder = (k * s + k * n * q - h) % r
+        print_kv("current_remainder", current_remainder)
+        print_kv("new_start % r", new_start % r)
 
         i += 1
 
