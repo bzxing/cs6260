@@ -69,6 +69,7 @@ def main():
     if x < 0 or x >= q:
         raise RuntimeError("Private key out of range")
 
+    print("BIG SUCCESS!")
     return 0
 
 
